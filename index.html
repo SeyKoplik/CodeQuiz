@@ -24,29 +24,35 @@
             margin-top: 100px;
             margin-bottom: 50px;
         }
+
+        #questionsPage, #gameOverPage {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
+
     <header class="navbar navbar-fixed-top navbar-expand-lg navbar-dark bg-dark m-1 p-2">
         <a class="navbar-brand" href="highscores.html">Highscores</a>
-        <ul class="navbar-brand ml-auto m-0">
+        <ul class="navbar-brand ml-auto m-0 hidden">
             TIMER: <span id="timer"></span>
-        </ul>
-        
-    </header>
-    <main class="container-fluid">
-        <section class="container-sm w-75 p-3 bg-light">
+        </ul></header>
+
+    <main class="container-fluid" id="openingPage">
+        <section class="container-sm w-75 p-3 mb-0 bg-light">
             <h1>Welcome!</h1>
-            <p>This quiz was developed to test your skills in JavaScript and coding language related knowledge, You are
-                given 2 minutes to complete this. Everytime you do not answer correctly, 10 seconds will be deducted
-                from the time.<BR>Good luck!</p>
-            <button type="button" class="btn btn-outline-danger mt-1"><h4>START QUIZ</h4></button>
+            <p>This quiz was developed to test your skills in JavaScript and coding language related knowledge. You are
+                given 2 minutes to complete this quiz. Everytime you give a <strong class="text-danger">wrong answer, 10 seconds will be deducted </strong>
+                from the time.
+                <BR>Good luck!
+            </p>
+        <button type="button" class="btn btn-outline-danger mt-1" id="beginQuiz"><h4>START QUIZ</h4></button>
         </section>
     </main>
 
-    <div class="container-sm">
-        <section class="container-sm w-75 p-3 bg-light">
+    <div class="container-fluid" id="questionsPage">
+        <section class="container-sm w-75 mt-5 p-3 bg-light">
             <fieldset class="form-group">
                 <legend>Radio buttons</legend>
                 <div class="form-check">
@@ -81,12 +87,26 @@
                     <button type="button" class="btn btn-outline-danger p-1">NEXT QUESTION</button>
                 </p>
             </fieldset>
-
-    </div>
+     </div>
     </section>
 
+    <div class="container-fluid" id="gameOverPage">
+        <section class="container-sm w-75 p-3 bg-light mb-5 mt-3">
+            <h1>ALL DONE!</h1>
+            <p>Congratulations for making it to the end!</p>
+            <form>
+            <h4>Your score: <span id="score"></span></h4>
+            <p>
+                <label for="fname">Please Enter Name to put in highscores page:</label><br>
+                <input type="text" id="name" name="name"><br>
+                     <button type="button" class="btn btn-outline-danger p-1 mt-2">Submit Score</button>
+                </form>
+            </p>
+        </section>
+    </div>
 
     <script src="./testScript.js"></script>
+    <script src="./highscoreScript.js"></script>
 </body>
 
 </html>
