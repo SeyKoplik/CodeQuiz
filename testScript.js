@@ -15,7 +15,7 @@ function startQuiz() {
     questionsPage.style.display = "block";
     timer.style.display = "block";
     timeStart();
-    showQuestions();
+    showQuestions(); 
   
 }
 
@@ -55,13 +55,17 @@ var lastQuestionIndex = questionSelection.length -1;
 var beginQuestionIndex = 0;
 
 function showQuestions(){
-    var x = questionSelection[beginQuestionIndex];
-    questionsAsked.innerHTML = x.questionSelection;
-    answerA.innerHTML = x.choiceA;
-    answerB.innerHTML = x.choiceB;
-    answerC.innerHTML = x.choiceC;
-    answerD.innerHTML = x.choiceD;
+    for (var x = 0; x < lastQuestionIndex; x++) {
+    var a = questionSelection[beginQuestionIndex];
+    questionAsked.innerHTML = a.question;
+    answerA.innerHTML = a.choiceA;
+    answerB.innerHTML = a.choiceB;
+    answerC.innerHTML = a.choiceC;
+    answerD.innerHTML = a.choiceD;
+    };
+
 }
+
 
 // showQuestions()
 // beginQuestionIndex++
