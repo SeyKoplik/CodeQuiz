@@ -86,7 +86,9 @@ var submitForm = document.getElementById("submitForm");
 var scoreList = document.getElementById("scoreList");
 var clearButton = document.getElementById("clearButton")
 var userName = document.getElementById("userName");
-var leaderboardNames = localStorage.getItem("names") ? JSON.parse(localStorage.getItem('items')) : [];
+var leaderboardNames = localStorage.getItem("names");
+
+JSON.parse(localStorage.getItem('items')) [];
 
 localStorage.setItem('names', JSON.stringify (leaderboardNames));
 
