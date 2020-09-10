@@ -45,6 +45,6 @@ var questions = [
         pickB: "flex-flow", 
         pickC: "align-items", 
         pickD: "flex-wrap",
-        asnwer: "justify-content"
+        answer: "justify-content"
     },
 ];

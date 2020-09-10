@@ -14,13 +14,11 @@ var choiceB = document.getElementById("choiceB");
 var choiceC = document.getElementById("choiceC");
 var choiceD = document.getElementById("choiceD");
 
-var nextButton = document.getElementById("nextButton");
 var submitButton = document.getElementById("submitButton");
 //update this when ready
-var timeLeft = 10 
+var timeLeft = 60 
 
 var currentQuestion = 0;
-var score = 0;
 
 beginQuiz.addEventListener('click', startQuiz);
 
@@ -36,10 +34,10 @@ function timeStart() {
     var timeInterval = setInterval(function() {
       timer2.textContent = timeLeft;
       timeLeft--;
-      if (timeLeft == -1) {
+      if (timeLeft == -1 || currentQuestion == questions.length) {
         timer2.textContent = "0";
         clearInterval(timeInterval);
-        setTimeout(quizOver, 500)
+        setTimeout(quizOver, 300)
       }
     }, 1000);
   }
@@ -50,79 +48,37 @@ function showQuestions() {
     choiceB.textContent = questions[currentQuestion].pickB;
     choiceC.textContent = questions[currentQuestion].pickC;
     choiceD.textContent = questions[currentQuestion].pickD;
-}
 
-function checkAnswer () {
-  for (var i=0; i<questions.length; i++) {
-    if(questions[currentQuestion].answer) {
-      score += 20;
-    } else {
-      timeLeft - 10;
-    }
-  }
-}
-
-function loadNextQuestion () {
-    for (var i=0; i<questions.length; i++) {
     choiceA.addEventListener('click', checkAnswer);
     choiceB.addEventListener('click', checkAnswer);
     choiceC.addEventListener('click', checkAnswer);
     choiceD.addEventListener('click', checkAnswer);
-    currentQuestion ++;
-
-    if(currentQuestion == questions.length) {
-        quizOver();
-        document.getElementById("score").textContent = score;
-        return;
-    }
-  }
 }
 
-document.getElementById("leaderboard").addEventListener('click', function() {
+var putScore = document.getElementById("score");
+
+var points = 0;
+
+function checkAnswer (e) {
+    if(e.target.textContent == questions[currentQuestion].answer) {
+      alert("correct");
+      points++;
+    } else {
+      timeLeft = timeLeft - 10;
+      alert("incorrect");
+    }
+    currentQuestion++;
+    showQuestions();
+    putScore.textContent = points+"/6";
+    quizOver;
+  }
+
+  function quizOver() {
+    questionsPage.style.display = "none";
+    gameOverPage.style.display = "block";
+  }
+
+  document.getElementById("leaderboard").addEventListener('click', function() {
   document.getElementById("scoresPage").style.display = "block";
 })
 
-nextButton.addEventListener('click', loadNextQuestion);
-
-function quizOver() {
-  questionsPage.style.display = "none";
-  gameOverPage.style.display = "block";
-}
-
-submitButton.addEventListener("click", function (event) {
-  event.stopPropagation();
-  scoreAddition();
-  gameOverPage.style.display = "none";
-  document.getElementById("scoresPage").style.display = "block";
-});
-
-function scoreAddition() {
-  enteredUser = document.getElementById("userName").value
-
-  var newScore = {
-    name: enteredUser,
-    score: score
-  };
-  
-  var scores = localStorage.setItem("scoreList", JSON.stringify(scores));
-
-  scores = JSON.parse(localStorage.getItem("scoreList") || "[]");
-
-  scores.push(newScore);
-}
-
-var highScores = JSON.parse(localStorage.getItem("highScores") || "[]");
-
-var scoreList = document.getElementById("scoreList");
-
-for (var i = 0; i < highScores.length; i++) {
-    var newList = document.createElement("<div>");
-    var enteredData = document.createTextNode(highScores[i].name + " - " + highScores[i].score);
-    newList.appendChild(enteredData);
-    scoreList.appendChild(newList);
-    }
-
-document.getElementById("clearButton").addEventListener("click", clearStorage)
-
-function clearStorage() {
-    scoreList.localStorage.clear()};
