@@ -104,7 +104,7 @@ function scoreAddition() {
     score: score
   };
   
-  var scores = localStorage.setItem("scoreList", JSON.stringify(highScores));
+  var scores = localStorage.setItem("scoreList", JSON.stringify(scores));
 
   scores = JSON.parse(localStorage.getItem("scoreList") || "[]");
 
