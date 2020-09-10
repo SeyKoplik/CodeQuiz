@@ -27,15 +27,21 @@
     </style>
 </head>
 <body>
-    <main class="container-fluid">
-    <div class="form-group">
-        <fieldset>
-        <h1>QUIZ SCORES:</h1>
-          <input class="form-control mx-auto" style="width: 500px" id="readOnlyInput" type="text" placeholder="Readonly input here…" readonly="">
-        </fieldset>
-      </div>
-
+    <body>
+        <div class="container mt-5">
+            <div class="container-sm w-75 p-3 mt-5 mb-0 bg-light">
+                <div class="col-10 col-lg-8">
+                    <h1 id="scoresTitle">LEADERBOARD</h1> <hr>
+                    <ol id="scoreList" class="mb-4"></ol>
+                    <button type="button" class="btn btn-outline-danger mt-2 p-1 clearBtn " id="clearBtn">Clear Scores</button>
+                    <button id="restartQuiz" type="button" onclick="window.location.href='./index.html'" class="btn btn-outline-danger p-1 mt-2">Quiz Again</button>
+                </div>
+            </div>
+        </div>
+        
+    
 </main>
+    <script src="./questions.js"></script>
     <script src="./testScript.js"></script>
 </body>
 

@@ -1,72 +1,128 @@
-
 var openingPage = document.getElementById("openingPage");
 var questionsPage = document.getElementById("questionsPage");
-var timer = document.getElementById("timer");
-var timer2 = document.getElementById("timer2");
 var gameOverPage = document.getElementById("gameOverPage");
-var timeLeft = 60;
-var timesDone = 0;
 
-document.getElementById("beginQuiz").addEventListener('click', startQuiz);
+var timer = document.getElementById("timer");
 
+var timer2 = document.getElementById("timer2");
+
+var beginQuiz = document.getElementById("beginQuiz");
+
+var questionsAsked = document.getElementById("questionsAsked");
+var choiceA = document.getElementById("choiceA");
+var choiceB = document.getElementById("choiceB");
+var choiceC = document.getElementById("choiceC");
+var choiceD = document.getElementById("choiceD");
+
+var nextButton = document.getElementById("nextButton");
+var submitButton = document.getElementById("submitButton");
+//update this when ready
+var timeLeft = 10 
+
+var currentQuestion = 0;
+var score = 0;
+
+beginQuiz.addEventListener('click', startQuiz);
 
 function startQuiz() {
     openingPage.style.display = "none";
     questionsPage.style.display = "block";
     timer.style.display = "block";
     timeStart();
-    showQuestions(); 
-  
+    showQuestions();
 }
 
-function timeStart() {
-    var timeLeft = 60;
-  
+function timeStart() {  
     var timeInterval = setInterval(function() {
       timer2.textContent = timeLeft;
       timeLeft--;
-
-  
       if (timeLeft == -1) {
         timer2.textContent = "0";
-        questionsPage.style.display = "none";
-        gameOverPage.style.display = "block";
         clearInterval(timeInterval);
-
+        setTimeout(quizOver, 500)
       }
-  
     }, 1000);
   }
 
-var questionsAsked = document.getElementById("questionAsked");
-var answerA = document.getElementById("answerA");
-var answerB = document.getElementById("answerB");
-var answerC = document.getElementById("answerC");
-var answerD = document.getElementById("answerD");
-
-questionSelection[0].question
-questionSelection[0].choiceA
-questionSelection[0].choiceB
-questionSelection[0].choiceC
-questionSelection[0].choiceD
-questionSelection[0].answer
-
-var lastQuestionIndex = questionSelection.length -1;
-var beginQuestionIndex = 0;
-
-function showQuestions(){
-    for (var x = 0; x < lastQuestionIndex; x++) {
-    var a = questionSelection[beginQuestionIndex];
-    questionAsked.innerHTML = a.question;
-    answerA.innerHTML = a.choiceA;
-    answerB.innerHTML = a.choiceB;
-    answerC.innerHTML = a.choiceC;
-    answerD.innerHTML = a.choiceD;
-    };
-
+function showQuestions() { 
+    questionsAsked.textContent = questions[currentQuestion].ask;
+    choiceA.textContent = questions[currentQuestion].pickA;
+    choiceB.textContent = questions[currentQuestion].pickB;
+    choiceC.textContent = questions[currentQuestion].pickC;
+    choiceD.textContent = questions[currentQuestion].pickD;
 }
 
+function checkAnswer () {
+  for (var i=0; i<questions.length; i++) {
+    if(questions[currentQuestion].answer) {
+      score += 20;
+    } else {
+      timeLeft - 10;
+    }
+  }
+}
 
-// showQuestions()
-// beginQuestionIndex++
-// showQuestions()
+function loadNextQuestion () {
+    for (var i=0; i<questions.length; i++) {
+    choiceA.addEventListener('click', checkAnswer);
+    choiceB.addEventListener('click', checkAnswer);
+    choiceC.addEventListener('click', checkAnswer);
+    choiceD.addEventListener('click', checkAnswer);
+    currentQuestion ++;
+
+    if(currentQuestion == questions.length) {
+        quizOver();
+        document.getElementById("score").textContent = score;
+        return;
+    }
+  }
+}
+
+document.getElementById("leaderboard").addEventListener('click', function() {
+  document.getElementById("scoresPage").style.display = "block";
+})
+
+nextButton.addEventListener('click', loadNextQuestion);
+
+function quizOver() {
+  questionsPage.style.display = "none";
+  gameOverPage.style.display = "block";
+}
+
+submitButton.addEventListener("click", function (event) {
+  event.stopPropagation();
+  scoreAddition();
+  gameOverPage.style.display = "none";
+  document.getElementById("scoresPage").style.display = "block";
+});
+
+function scoreAddition() {
+  enteredUser = document.getElementById("userName").value
+
+  var newScore = {
+    name: enteredUser,
+    score: score
+  };
+  
+  var scores = localStorage.setItem("scoreList", JSON.stringify(highScores));
+
+  scores = JSON.parse(localStorage.getItem("scoreList") || "[]");
+
+  scores.push(newScore);
+}
+
+var highScores = JSON.parse(localStorage.getItem("highScores") || "[]");
+
+var scoreList = document.getElementById("scoreList");
+
+for (var i = 0; i < highScores.length; i++) {
+    var newList = document.createElement("<div>");
+    var enteredData = document.createTextNode(highScores[i].name + " - " + highScores[i].score);
+    newList.appendChild(enteredData);
+    scoreList.appendChild(newList);
+    }
+
+document.getElementById("clearButton").addEventListener("click", clearStorage)
+
+function clearStorage() {
+    scoreList.localStorage.clear()};

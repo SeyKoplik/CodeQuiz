@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
     <style>
         body {
             background-color: rosybrown;
@@ -25,24 +28,22 @@
             margin-bottom: 50px;
         }
 
-        #questionsPage,
-        #gameOverPage, #timer {
+        #questionsPage, #timer, #gameOverPage, #scoresPage {
             display: none;
         }
     </style>
 </head>
 
 <body>
-
     <header class="navbar navbar-fixed-top navbar-expand-lg navbar-dark bg-dark m-1 p-2">
-        <a class="navbar-brand" href="highscores.html">Highscores</a>
-        <div class="navbar-brand ml-auto" id="timer">
+    <div class="navbar-brand"><span id="leaderboard">Highscores</span></div>
+    <div class="navbar-brand ml-auto" id="timer">
             TIMER: <span id="timer2"></span>
         </div>
     </header>
 
     <main class="container-fluid" id="openingPage">
-        <section class="container-sm w-75 p-3 mb-0 bg-light">
+        <section class="container-sm w-50 p-3 mt-5 mb-0 bg-light">
             <h1>Welcome!</h1>
             <p>This quiz was developed to test your skills in JavaScript and coding language related knowledge. You are
                 given 60 seconds to complete this quiz. Everytime you give a <strong class="text-danger">wrong answer, 10
@@ -51,47 +52,25 @@
                 <BR>Good luck!
             </p>
             <button type="button" class="btn btn-outline-danger mt-1" id="beginQuiz">
-                <h4>START QUIZ</h4>
+                         <h4>START QUIZ</h4>
             </button>
         </section>
     </main>
 
     <div class="container-fluid" id="questionsPage">
-        <section class="container-sm w-75 mt-5 p-3 bg-light" style="text-align: left;">
-            <fieldset class="form-group">
-
-                <legend id="questionAsked"></legend>
-
-                <div class="form-check choice">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2 clickA"  value="option2">
-                        A. <span id ="answerA"></span>
-                    </label>
-                </div>
-
-                <div class="form-check choice">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2 clickB"  value="option2">
-                        B. <span id ="answerB"></span>
-                    </label>
-                </div>
-
-                <div class="form-check choice">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2 clickC"  value="option2">
-                        C. <span id ="answerC"></span>
-                    </label>
-                </div>
-
-                <div class="form-check choice">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2 clickD"  value="option2">
-                        D. <span id ="answerD"></span>
-                    </label>
-                </div>
-
+        <section class="container-sm w-50 p-3 mt-5 mb-0 bg-light">
+            <fieldset id="QA-block" style="text-align: left;">
+            <legend id="questionsAsked" class="mb-3">QUESTION</legend>
+                    <button id="choiceA" type="button" class="btn btn-outline-danger p-1 m-1">A) </button>
+                    <BR>
+                    <button id="choiceB" type="button" class="btn btn-outline-danger p-1 m-1">B) </button>
+                    <BR>
+                    <button id="choiceC" type="button" class="btn btn-outline-danger p-1 m-1">C) </button>
+                    <BR>
+                    <button id="choiceD" type="button" class="btn btn-outline-danger p-1 m-1">D) </button>
+               
                 <p class="text-right mb-0">
-                    <button type="button" id="nextButton" class="btn btn-outline-danger p-1">NEXT QUESTION</button>
+                    <button id="nextButton" type="button" class="btn btn-outline-danger p-1">NEXT</button>
                 </p>
             </fieldset>   
          </section>
@@ -99,22 +78,33 @@
 
 
     <div class="container-fluid" id="gameOverPage">
-        <section class="container-sm w-75 p-3 bg-light mb-5 mt-3">
+        <section class="container-sm w-50 p-3 bg-light mb-5 mt-3">
             <h1>ALL DONE!</h1>
             <p>You have made it to the end of the quiz!</p>
-            <form>
-                <h4>Your score: <span id="score"></span></h4>
-                <p>
-                    <label for="fname">Please Enter Name to put in highscores page:</label><br>
-                    <input type="text" id="name" name="name"><br>
-                    <button type="button" class="btn btn-outline-danger p-1 mt-2">Submit Score</button>
-            </form>
-            </p>
+        <form>
+        <h4>Your score is.. <span id="score"></span></h4>
+        <p>
+        <label>Enter initials to put in highscores page:</label>
+        <br>
+         <input type="text" id="userName">
+            <br>
+                <button id="submitButton" type="button" class="btn btn-outline-danger p-1 mt-2">Submit Score</button>
+
+        </p></form>
         </section>
     </div>
 
 
-
+    <div class="container mt-5" id="scoresPage">
+        <div class="container-sm w-75 p-3 mt-5 mb-0 bg-light">
+            <div class="col-10 col-lg-8">
+                <h1 id="scoresTitle">LEADERBOARD</h1> <hr>
+                <div id="scoreList" class="mb-4"></div>
+                <button type="button" class="btn btn-outline-danger mt-2 p-1 clearBtn" id="clearButton">Clear Scores</button>
+                <button id="restartQuiz" type="button" onclick="window.location.href='./index.html'" class="btn btn-outline-danger p-1 mt-2">Quiz Again</button>
+            </div>
+        </div>
+    </div>
 
     <script src="./questions.js"></script>
     <script src="./testScript.js"></script>
