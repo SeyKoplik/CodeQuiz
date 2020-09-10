@@ -95,16 +95,16 @@ var data = JSON.parse(localStorage.getItem('names'));
 var listMade = (text) => {
   var li = document.createElement('li');
   scoreList.textContent = text;
-  ul.appendChild(li);
+  scoreList.appendChild(li);
 }
 
 submitForm.addEventListener('submit', function(e) {
   e.preventDefault();
 
-  leaderboardNames.push(input.value);
+  leaderboardNames.push(userName.value);
   localStorage.setItem('names', JSON.stringify(leaderboardNames));
-  listMade(input.value);
-  input.value = "";
+  listMade(userName.value);
+  userName.value = "";
 });
 
 data.forEach(item => {
@@ -113,8 +113,8 @@ data.forEach(item => {
 
 clearButton.addEventListener('click', function() {
   localStorage.clear();
-  while(ul.firstChild) {
-    ul.removeChild(ul.firstChild);
+  while(scoreList.firstChild) {
+    scoreList.removeChild(scoreList.firstChild);
   }
   leaderboardNames = [];
 });
