@@ -78,7 +78,43 @@ function checkAnswer (e) {
     gameOverPage.style.display = "block";
   }
 
-  document.getElementById("leaderboard").addEventListener('click', function() {
+document.getElementById("submitButton").addEventListener('click', function() {
   document.getElementById("scoresPage").style.display = "block";
 })
 
+var submitForm = document.getElementById("submitForm");
+var scoreList = document.getElementById("scoreList");
+var clearButton = document.getElementById("clearButton")
+var userName = document.getElementById("userName");
+var leaderboardNames = localStorage.getItem("names") ? JSON.parse(localStorage.getItem('items')) : [];
+
+localStorage.setItem('names', JSON.stringify (leaderboardNames));
+
+var data = JSON.parse(localStorage.getItem('names'));
+
+var listMade = (text) => {
+  var li = document.createElement('li');
+  scoreList.textContent = text;
+  ul.appendChild(li);
+}
+
+submitForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  leaderboardNames.push(input.value);
+  localStorage.setItem('names', JSON.stringify(leaderboardNames));
+  listMade(input.value);
+  input.value = "";
+});
+
+data.forEach(item => {
+  listMade(item);
+});
+
+clearButton.addEventListener('click', function() {
+  localStorage.clear();
+  while(ul.firstChild) {
+    ul.removeChild(ul.firstChild);
+  }
+  leaderboardNames = [];
+});
