@@ -1,23 +1,16 @@
 var openingPage = document.getElementById("openingPage");
 var questionsPage = document.getElementById("questionsPage");
 var gameOverPage = document.getElementById("gameOverPage");
-
 var timer = document.getElementById("timer");
-
 var timer2 = document.getElementById("timer2");
-
 var beginQuiz = document.getElementById("beginQuiz");
-
 var questionsAsked = document.getElementById("questionsAsked");
 var choiceA = document.getElementById("choiceA");
 var choiceB = document.getElementById("choiceB");
 var choiceC = document.getElementById("choiceC");
 var choiceD = document.getElementById("choiceD");
-
 var submitButton = document.getElementById("submitButton");
-
 var timeLeft = 60
-
 var currentQuestion = 0;
 
 beginQuiz.addEventListener('click', startQuiz);
