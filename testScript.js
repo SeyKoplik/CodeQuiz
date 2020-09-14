@@ -96,9 +96,11 @@ document.getElementById("submitButton").addEventListener('click', function () {
     getNames.push(leaderboardData);
  
   function submitLeaderboard() {
+    for (var i = 0; i < scoreList.length; i++){
     var p = document.createElement("p");
-    p.innerHTML = name + "-" + postScore;
+    p.innerHTML = name + "-" + points;
     scoreList.appendChild(p);
+    }
   }
 
   clearButton.addEventListener('click', function () {
