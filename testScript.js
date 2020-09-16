@@ -10,8 +10,9 @@ var choiceB = document.getElementById("choiceB");
 var choiceC = document.getElementById("choiceC");
 var choiceD = document.getElementById("choiceD");
 var submitButton = document.getElementById("submitButton");
-var timeLeft = 60
+var timeLeft = 60;
 var currentQuestion = 0;
+var getNames = JSON.parse(localStorage.getItem("getNames")) || [] ;
 
 beginQuiz.addEventListener('click', startQuiz);
 
@@ -51,14 +52,14 @@ function showQuestions() {
   choiceB.addEventListener('click', checkAnswer);
   choiceC.addEventListener('click', checkAnswer);
   choiceD.addEventListener('click', checkAnswer);
-}
+};
+
+var putScore = document.getElementById("score")
 var points = 0;
-var scoreList = document.getElementById("scoreList");
-var clearButton = document.getElementById("clearButton");
-var putScore = document.getElementById("score");
 
 function checkAnswer(e) {
-  if (e.target.textContent == questions[currentQuestion].answer) {
+
+  if (e.target.textContent === questions[currentQuestion].answer) {
     alert("correct");
     points++;
   } else {
@@ -66,40 +67,50 @@ function checkAnswer(e) {
     alert("incorrect");
   }
   currentQuestion++;
-  showQuestions();
+  if (currentQuestion < questions.length) {
+    showQuestions();
+  } else {
   putScore.textContent = points + "/6";
-  quizOver;
+  quizOver();
+  }
 }
+
 
 document.getElementById("submitButton").addEventListener('click', function () {
   event.preventDefault();
+  var score = document.getElementById("score").textContent;
+  var userName = document.getElementById("userName").value;
+  console.log(score);
+  console.log(userName);
   document.getElementById("scoresPage").style.display = "block";
+  gameOverPage.style.display = "none";
+  getNames.push({name:userName,score:score});
+  localStorage.setItem("getNames", JSON.stringify(getNames));
   submitLeaderboard();
-});
+  });
 
-  var getNames = JSON.parse(localStorage.getItem('getNames')) || [];
   
-  var leaderboardData = {
-    name: $("#userName").val().trim(),
-    postScore: points
-    };
-
-    localStorage.setItem('getNames', JSON.stringify(leaderboardData));
-
-    getNames.push(leaderboardData);
- 
+  submitLeaderboard();
+  
   function submitLeaderboard() {
-    for (var i = 0; i < scoreList.length; i++){
-    var p = document.createElement("p");
-    p.innerHTML = name + "-" + points;
-    scoreList.appendChild(p);
+    var scoreList = document.getElementById("scoreList");
+    scoreList.innerHTML = "";
+    for (var i=0; i < getNames.length; i++) {
+    var h4 = document.createElement("h4");
+    h4.style.textAlign = "center";
+    h4.textContent = getNames[i].name + "-" + getNames[i].score;
+    scoreList.appendChild(h4);
     }
   }
+
+  var clearButton = document.getElementById("clearButton");
 
   clearButton.addEventListener('click', function () {
     localStorage.clear();
     if (scoreList.firstChild = " ") {
       scoreList.removeChild(scoreList.firstChild);
     }
+
+  
   });
 
