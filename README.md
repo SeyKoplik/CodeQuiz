@@ -1,4 +1,4 @@
-# CodeQuiz
+# Vanilla Javascript -- Code Quiz
 
 ## Description
 
